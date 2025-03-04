@@ -1,10 +1,11 @@
 {
-    "name": "Multiplayer",
+    "name": "MultiplayerTest",
     "description": "",
     "dependencies": {
         "core": "*",
         "v3": "*",
-        "radio-broadcast": "*"
+        "radio-broadcast": "*",
+        "datalogger": "*"
     },
     "files": [
         "main.blocks",
