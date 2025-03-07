@@ -16,6 +16,8 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
 input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
     music.play(music.createSoundExpression(WaveShape.Square, 1600, 1, 255, 0, 300, SoundExpressionEffect.None, InterpolationCurve.Curve), music.PlaybackMode.UntilDone)
     if (MyX.get(LedSpriteProperty.X) == HisX.get(LedSpriteProperty.X)) {
+        radio.sendValue("Damage", 1)
+    } else {
         radio.sendValue("Damage", 0)
     }
 })
@@ -33,14 +35,18 @@ radio.onReceivedValue(function (name, value) {
         music.play(music.createSoundExpression(WaveShape.Square, 742, 1, 91, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Curve), music.PlaybackMode.InBackground)
         HisX.set(LedSpriteProperty.X, value)
     } else if ("Damage" == name) {
-        Health += -1
-        if (Health == 2) {
-            basic.setLedColors(0x00ff00, 0x00ff00, 0xff0000)
-        } else if (Health == 1) {
-            basic.setLedColors(0x00ff00, 0xff0000, 0xff0000)
-        } else if (Health == 0) {
-            basic.setLedColors(0xff0000, 0xff0000, 0xff0000)
-            Lose()
+        if (value == 1) {
+            if (MyX.get(LedSpriteProperty.X) == HisX.get(LedSpriteProperty.X)) {
+                Health += -1
+                if (Health == 2) {
+                    basic.setLedColors(0x00ff00, 0x00ff00, 0xff0000)
+                } else if (Health == 1) {
+                    basic.setLedColors(0x00ff00, 0xff0000, 0xff0000)
+                } else if (Health == 0) {
+                    basic.setLedColors(0xff0000, 0xff0000, 0xff0000)
+                    Lose()
+                }
+            }
         }
         music.play(music.createSoundExpression(WaveShape.Sawtooth, 5000, 0, 255, 0, 500, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
     } else if ("Win" == name) {
